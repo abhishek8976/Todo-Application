@@ -21,6 +21,7 @@
                 body: JSON.stringify({
                     "_csrf":token
                 })
+
             })
             .then((res) =>
             {
@@ -28,6 +29,7 @@
             })
             .catch((err) => console.error(err));
         }
+
         function deleteTodo(id)
         {
             fetch(`/todos/${id}`,{
