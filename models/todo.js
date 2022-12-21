@@ -55,3 +55,19 @@ module.exports = (sequelize, DataTypes) => {
         }
       })
     }
+
+
+    markAsCompleted() {
+      return this.update({completed: true});
+    }
+  }
+  Todo.init({
+    title: DataTypes.STRING,
+    dueDate: DataTypes.DATEONLY,
+    completed: DataTypes.BOOLEAN,
+  }, {
+    sequelize,
+    modelName: 'Todo',
+  });
+  return Todo;
+};
