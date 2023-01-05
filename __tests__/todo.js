@@ -37,9 +37,9 @@ describe("todo test suits", () => {
     const csrfToken = fetchCsrfToken(response);
     response = await agent.post("/users").send({
       firstName: "Suraj",
-      lastName: "chy",
+      lastName: "Chaudhary",
       email: "suraj123@gmail.com",
-      password: "12345678",
+      password: "suraj123",
       _csrf: csrfToken,
     });
     expect(response.statusCode).toBe(302);
@@ -58,9 +58,9 @@ describe("todo test suits", () => {
     let res = await agent.get("/signup");
     const csrfToken = fetchCsrfToken(res);
     res = await agent.post("/users").send({
-      firstName: "sovit",
-      lastName: "chy",
-      email: "sovit123@gmail.com",
+      firstName: "second",
+      lastName: "user",
+      email: "second1@gmail.com",
       password: "12345678",
       _csrf: csrfToken,
     });
@@ -69,7 +69,7 @@ describe("todo test suits", () => {
 
   test("Test create a new todo", async () => {
     const agent = request.agent(server);
-    await login(agent, "suraj123@gmail.com", "12345678");
+    await login(agent, "suraj123@gmail.com", "suraj123");
     const getResponse = await agent.get("/todos");
     const csrfToken = fetchCsrfToken(getResponse);
     const response = await agent.post("/todos").send({
@@ -82,7 +82,7 @@ describe("todo test suits", () => {
   });
   test("Test a markAsComplete functionality", async () => {
     const agent = request.agent(server);
-    await login(agent, "suraj123@gmail.com", "12345678");
+    await login(agent, "suraj123@gmail.com", "suraj123");
     const getResponse = await agent.get("/todos");
     let csrfToken = fetchCsrfToken(getResponse);
     await agent.post("/todos").send({
@@ -110,7 +110,7 @@ describe("todo test suits", () => {
   });
   test("Test the delete functionality", async () => {
     const agent = request.agent(server);
-    await login(agent, "suraj123@gmail.com", "12345678");
+    await login(agent, "suraj123@gmail.com", "suraj123");
     const getResponse = await agent.get("/todos");
     let csrfToken = fetchCsrfToken(getResponse);
     await agent.post("/todos").send({
@@ -139,7 +139,7 @@ describe("todo test suits", () => {
 
   test("Test marking an item as incomplete", async () => {
     const agent = request.agent(server);
-    await login(agent, "suraj123@gmail.com", "12345678");
+    await login(agent, "suraj123@gmail.com", "suraj123");
     const getResponse = await agent.get("/todos");
     let csrfToken = fetchCsrfToken(getResponse);
     await agent.post("/todos").send({
@@ -178,7 +178,7 @@ describe("todo test suits", () => {
 
   test("test delete one user todo by another user", async () => {
     const firstAgent = request.agent(server);
-    await login(firstAgent, "suraj123@gmail.com", "12345678");
+    await login(firstAgent, "suraj123@gmail.com", "suraj123");
     let res = await firstAgent.get("/todos");
     let csrfToken = fetchCsrfToken(res);
     await firstAgent.post("/todos").send({
@@ -197,7 +197,7 @@ describe("todo test suits", () => {
       parsedGroupedResponse.dueToday[dueTodayCount - 1];
 
     const secondUser = request.agent(server);
-    await login(secondUser, "sovit123@gmail.com", "12345678");
+    await login(secondUser, "second1@gmail.com", "12345678");
 
     res = await secondUser.get("/todos");
     csrfToken = fetchCsrfToken(res);
