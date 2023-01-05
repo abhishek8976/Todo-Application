@@ -137,7 +137,7 @@ describe("todo test suite", () => {
     expect(boolResponse).toBe(true);
   });
 
-  test("Test marking an item as incomplete", async () => {
+  test("Test todo item as incomplete", async () => {
     const agent = request.agent(server);
     await login(agent, "user2@gmail.com", "12345678");
     const getResponse = await agent.get("/todos");
@@ -176,7 +176,7 @@ describe("todo test suite", () => {
     expect(UpadteTodoItemParse2.completed).toBe(false);
   });
 
-  test("test delete one user todo by another user", async () => {
+  test("test delete/update one user todo by another user", async () => {
     const firstAgent = request.agent(server);
     await login(firstAgent, "user2@gmail.com", "12345678");
     let res = await firstAgent.get("/todos");
