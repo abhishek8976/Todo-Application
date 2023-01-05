@@ -4,6 +4,7 @@ const express = require("express");
 const app = express();
 const csrf = require("tiny-csrf");
 const { Todo, User } = require("./models");
+
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const passport = require("passport");
@@ -84,18 +85,17 @@ passport.deserializeUser((id, done) => {
     });
 });
 
-// seting the ejs is the engine
 app.set("view engine", "ejs");
 
-app.get("/", async(request, response) => {
-  if(request.user){
+app.get("/", async (request, response) => {
+  if (request.user) {
     return response.redirect("/todos");
   }
-  else{
+  else {
     response.render("index", {
       title: "Todo-Application",
       csrfToken: request.csrfToken(),
-   });
+    });
   }
 });
 
@@ -142,7 +142,7 @@ app.get(
 app.use(express.static(path.join(__dirname, "public")));
 
 //Signup page
-app.get("/signup",(request,response) => {
+app.get("/signup", (request, response) => {
   response.render("signup", {
     title: "Signup",
     csrfToken: request.csrfToken(),
@@ -186,7 +186,7 @@ app.post("/users", async (request, response) => {
     })
   } catch (error) {
     request.flash("error", error.message);
-    request.flash("error", "User already exist with this email");
+    request.flash("error", "User already exist!");
     return response.redirect("/signup");
   }
 });
@@ -277,11 +277,10 @@ app.delete(
   async function (request, response) {
     console.log("We have deleted Todo ID");
     const deleteFlag = await Todo.destroy({ where: { id: request.params.id } });
-    if(deleteFlag === 0)
-    {
+    if (deleteFlag === 0) {
       return response.send(false);
     }
-    else{
+    else {
       response.send(true);
     }
   }
